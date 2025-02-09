@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \usepackage{enumitem} % カスタマイズ用パッケージ
 \usepackage{placeins} % 画像のフロートを防止
+\usepackage{caption}
+\captionsetup[table]{position=top} % すべての表のキャプションを上にする
 
 \setmainfont{Harano Aji Mincho}
 \setsansfont{Harano Aji Gothic}
@@ -232,22 +234,85 @@ Clustering of Eye Movements\\ in Program Reading}
       \includegraphics[width=0.8\linewidth]{実験部屋.jpg}
       \caption{実験部屋の様子}
     \end{figure}
+    \FloatBarrier
 
 \clearpage
 
 \part{データの分析}
   本章では、実験で得られたデータを加工し、分析する一連の流れを示す。
+
+  \section{はじめに}
+  　実験により得られた生データはxml形式で保存される。以下に、生データが持つパラメータを記す。\\
+    \begin{table}[h]
+      \centering
+      \caption{生データに含まれるデータ一覧}
+      \begin{tabular}{|c|c|c|}
+        \hline
+        パラメータ名 & 値の意味 & 値の例 \\ \hline
+        screen\_width & ディスプレイ画面の横px数 & 1920 \\ \hline
+        screen\_height & ディスプレイ画面の縦px数 & 1200 \\ \hline
+        plugin\_type & プラグインの種類 & ATOM \\ \hline
+        gaze & 視線情報 & 後述 \\ \hline
+      \end{tabular}
+      \label{tab:basic}
+    \end{table}
+   \FloatBarrier
+
+  　gazeパラメータはアイトラッカーのサンプリング数だけ存在し、それぞれ以下のパラメータを持つ。
+
+  \begin{table}[h]
+    \centering
+    \caption{生データに含まれる視線情報}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        パラメータ名 & 値の意味 & 値の例 \\ \hline
+        event\_id & 2 & 133784518694431017 \\ \hline
+        plugin\_time & サンプリングのUNIX時間[ms] & 1733978269442 \\ \hline
+        x & ディスプレイ画面上のx座標[px] & 480 \\ \hline
+        y & ディスプレイ画面上のy座標[px] & 418 \\ \hline
+        source\_file\_line & ソースコード中の行 & 2 \\ \hline
+        source\_file\_col & ソースコード中の列 & 9 \\ \hline
+        word & 視線が位置していた単語 & int \\ \hline
+        gaze\_target & 視線が位置していたファイルの名前 & Problem1.java \\ \hline
+        gaze\_target\_type & 対象ファイルの拡張子 & java \\ \hline
+        source\_file\_path & 対象ファイルのファイルパス & Problem1.java \\ \hline
+        editor\_line\_height & エディタの行の高さの設定値 & 40 \\ \hline
+        editor\_font\_height & エディタのフォントサイズの設定値 & 120 \\ \hline
+    \end{tabular}
+    \label{tab:basic}
+  \end{table}
+  \FloatBarrier
   
-  大まかな流れを以下に示す。\\
-  xmlから特定の情報を抜き出し、csvに加工
+  上述の生データから特定の情報を抜き出し、プログラムで扱いやすいようcsvに加工する。
   csvから、クラスごとの注視時間割合を算出
   注視時間割合を主成分分析で3次元まで落とし、正誤で色分けして3Dプロットで可視化
-  可視化したデータを観察
-
-  \section{}
-    
+  可視化したデータを観察する。
 
   \section{3Dプロットの観察}
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{3dplot_q3.png}
+      \caption{タスク3の分布}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{3dplot_q4_1.png}
+      \caption{タスク4-1の分布}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{3dplot_q4_2.png}
+      \caption{タスク4-2の分布}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{3dplot_q5.png}
+      \caption{タスク5の分布}
+    \end{figure}
+    \FloatBarrier
 
 \clearpage    
 
