@@ -7,6 +7,11 @@
 \setmainjfont{Harano Aji Mincho}
 \setsansjfont{Harano Aji Gothic}
 
+%句読点置き換え
+\usepackage{newunicodechar}
+\newunicodechar{、}{，}
+\newunicodechar{。}{．}
+
 \usepackage{amsmath,amssymb}
 \usepackage{unicode-math}
 \setmathfont{LatinModernMath-Regular}
@@ -26,22 +31,41 @@ Clustering of Eye Movements\\ in Program Reading}
 \clearpage
 
 \part{はじめに}
-  \section{研究背景}
-  情報活用能力が必要となった近年において、初等教育からプログラミングが必修化されるなどプログラミング教育の機会は増加している。一方で、プログラミングに長けた指導者の不足が問題視されている。そのため、プログラミング学習の支援となるシステムの重要性が高まっている。学習システム開発のためには、プログラミングを理解している人の読解方法の傾向をつかむことが重要となっている。
-  プログラミング学習支援において、プログラム読解過程の分析、特にプログラミングを理解しているかに応じた分析は、プログラミング学習者の支援において有用であることが示されている。
-    
+  \section{本研究の背景}
+  　情報活用能力が必要となった近年において、初等教育からプログラミングが必修化されるなどプログラミング教育の機会は増加している。
+  一方で、プログラミングに長けた指導者の不足が問題視されている。そのため、プログラミング学習の支援となるシステムの重要性が高まっている。
+  学習システム開発のためには、プログラミングを理解している人の読解方法の傾向をつかむことが重要となっている。\\
+  　これまで、ソースコード読解時の視線運動を対象とした検証が行われている。被験者にソースコード読解を必要とするタスクを課し、
+  読解時の視線運動をアイトラッカーでの計測によりディスプレイ画面上の視線座標という形で取得し、タスクの正誤との関係を調べる分析が主流となっている。
+  これまでタスクに利用されてきたソースコードは、変数代入や四則演算のみで構成されるもの、条件分岐や繰り返し文を含むものであるが、
+  いずれも単一のクラスを用いた手続き型のソースコードで、数行から十数行程度の短いものである。既存の研究では、クラスオブジェクト生成やポリモーフィズムなど、
+  オブジェクト指向の概念を取り入れたソースコードでの検証はなされていない。
+  
 
-  \section{研究目的}
+  \section{本研究の目的}
+  　本論文では、6つのクラスで構成され、オブジェクト生成やメソッド呼び出しを含む百行以上にわたるソースコードを用いて実験を行い、
+  クラス単位というよりマクロな視点での分析を行う。分析結果の検証のため、被験者ごとの各クラスへの注視時間割合を求め、視線運動の傾向を表すパラメータとする。
+  傾向の可視化のため、3次元グラフを用いる。高次元データを3次元グラフで可視化するため、主成分分析で次元圧縮をする。
 
-
-\part{関連研究}
+  \section{本論文の構成}
+  　本論文では、以下の構成に従って、複数のクラスで構成されるJavaソースコードの読解者の視線運動に対する研究成果の報告を行う。\\
+  　第２章では本研究に際し提案した手法の紹介をする。\\
+  　第３章では本研究のため行った実験の準備や手順を説明する。\\
+  　第４章では実験で得られたデータを加工し、分析する過程とその結果を説明する。\\
+  　最後に、第５章で本研究のまとめを行う。
 
 
 \part{提案手法}
+  \section{既存の分析手法}
+  本研究では、上野らが示したデータ処理・
 
+  \section{新たに提案する手法}
+  
 
 \part{実験}
-  本章では、実験に際し行った準備と、実験の手順を示す。
+  本章では、実験に際し行った準備と、実験の手順を示す。\\
+  実験は、被験者27名を対象とし、1つのプログラムに関する5つのタスクを課す。
+  アイトラッカーと呼ばれる機器を用いて被験者のモニタ画面上の視線座標を取得する目的で行う。
   
   本章の大まかな流れを以下に示す。
   \begin{enumerate}
@@ -62,10 +86,70 @@ Clustering of Eye Movements\\ in Program Reading}
       \end{enumerate}
   \end{enumerate}
 
+  \section{実験に使用する物}
+    実験に際して、以下の物が必要となる。
+    \begin{enumerate}
+      \item 被験者の視線座標取得に用いるアイトラッカー(Tobii Pro Spark)
+      \item アイトラッカーの設定・キャリブレーションに用いるソフトウェア(Tobii Pro Eye Tracker Manager)
+      \item アイトラッカーの処理を担当するソフトウェア(iTrace)
+      \item タスクに使用するソースコードを表示するエディタ(Atom)
+      \item アイトラッカーで取得した画面上での座標を、ソースコードの行・列に変換する為のプラグイン
+      \item ソースコードとタスク
+    \end{enumerate}
+    以下、これらの物を解説する。
+
+    \subsection{被験者の視線座標取得に用いるアイトラッカー}
+      視線運動をデータとして取得するため,アイトラッカーと呼ばれる装置を使用する.本研究では,3台のディスプレイで同時に測定するため、計3台のアイトラッカーを準備する。
+      内訳として、Tobii Pro Spark\cite{spark}2台とTobii Pro Nano\cite{nano}1台を使用する。
+      \\
+      Tobii Pro Spark、Tobii Pro Nanoともにディスプレイ装置の下部に固定することで,ディスプレイ平面上における被験者の注視点の座標を計測するものである.
+      サンプリングレートはいずれも60Hzである.測定の際,各被験者ごとにキャリブレーションする.
+
+    \subsection{Tobii Pro Eye Tracker Manager}
+      アイトラッカーのパラメータ設定、キャリブレーションにはTobii公式で提供されているTobii Pro Eye Tracker Managerというソフトウェアを使用する。
+    
+    \subsection{アイトラッカーの処理を担当するソフトウェア}
+      アイトラッカーの測定開始・終了処理や、出力データの成型などを担当するミドルウェアとしてiTrace\cite{itrace}を使用する。
+
+    \subsection{タスクに使用するソースコードを表示するエディタ(Atom)}
+      エディタは、iTraceプラグインとの互換性のため、Atom\cite{atom}を使用する。
+
+    \subsection{iTrace-Atomプラグイン}
+      iTraceの出力座標データとエディタの画面表示情報を結びつけ、座標からプログラム中の行・列に対応させるため、Atomエディタのプラグインが開発されている。\\
+      本研究では、Github上で公開されているiTrace-Atomプラグインに機能を追加したものを用いる。
+    
+    \subsection{ソースコードとタスク}
+      ソースコードはJavaで記述し、Mainクラスを含む計6つのクラスで構成されるものを準備する。
+      \begin{figure}[htbt]
+        \centering
+        \includegraphics[height=\textheight]{carbon_clip_resized.png}
+        \caption{使用したソースコード}
+      \end{figure}
+      
+    \subsection{ディスプレイ}
+
+
+    \subsection{コンピュータ}
+      
+  
   \section{実験準備}
-    実験に際して、
+    実験で使用する
 
   \section{実験}
+    本章では、実験の流れを示す。本実験により、データは問1～問5で　人分得られた。
+
+    近畿大学工業高等専門学校情報科4年生の学生27名を対象として行う。対象者全員がオブジェクト指向を含むJavaプログラミングの授業を受講した経験がある。\\
+    実験では、オブジェクト指向の概念を含まない問題2問、含む問題3問の計5つの問題に取り組んでもらった。なお、対象者全員に計測するデータを研究以外の用途
+    に使用しない旨を伝え、承諾書にサインしてもらった。
+    3台の実験台を用い、3人ずつ同時並行で測定する。実験の流れを以下に示す。\\
+    
+    承諾書にサインしてもらう
+    解答用紙に、出席番号と名前を書いてもらう
+    3台の実験台それぞれに座ってもらい、キャリブレーションを行う。
+    実験の流れの説明。
+    ソースコードを読んで問題を解くこと、その際の視線データを計測すること、
+    スクロール操作のみ行い、コードへの書き込みを行わないこと、回答がわかり次第挙手で合図し、解答用紙に書き込むこと、
+
 
     \begin{figure}[htbp]
       \centering
@@ -74,14 +158,28 @@ Clustering of Eye Movements\\ in Program Reading}
     \end{figure}
 
 \part{データの分析}
+  本章では、実験で得られたデータを加工し、分析する一連の流れを示す。
+  
+  大まかな流れを以下に示す。\\
+  xmlから特定の情報を抜き出し、csvに加工
+  csvから、クラスごとの注視時間割合を算出
+  注視時間割合を主成分分析で3次元まで落とし、正誤で色分けして3Dプロットで可視化
+  可視化したデータを観察
 
+  \section{}
+    
+
+  \section{3Dプロットの観察}
+    
 
 \part{結論}
 
 
 \begin{thebibliography}{99}
   \bibitem{uwano} 構文木と視線移動の自動マッピング手法を用いたプログラム理解過程の分析,吉岡春彦,上野秀剛,2023
-  \bibitem{tobii} tobii pro spark https://www.tobii.com/ja/products/eye-trackers/screen-based/tobii-pro-spark
+  \bibitem{spark} tobii pro spark https://www.tobii.com/ja/products/eye-trackers/screen-based/tobii-pro-spark
+  \bibitem{manager} Tobii Pro Eye Tracker Manager https://connect.tobii.com/s/etm-download
+  \bibitem{nano} https://www.tobii.com/ja/products/discontinued/tobii-pro-nano
   \bibitem{itrace} iTrace https://www.i-trace.org/
   \bibitem{atom} ATOM https://atom-editor.cc/
 \end{thebibliography}
