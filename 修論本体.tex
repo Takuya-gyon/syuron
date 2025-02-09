@@ -2,6 +2,9 @@
 % パッケージの読み込み
 \usepackage{luatexja-fontspec}
 \usepackage{graphicx}
+\usepackage{enumitem} % カスタマイズ用パッケージ
+\usepackage{placeins} % 画像のフロートを防止
+
 \setmainfont{Harano Aji Mincho}
 \setsansfont{Harano Aji Gothic}
 \setmainjfont{Harano Aji Mincho}
@@ -17,6 +20,17 @@
 \setmathfont{LatinModernMath-Regular}
 
 \graphicspath{{img/}}
+
+\makeatletter
+% section の番号を part ごとにリセット
+\@addtoreset{section}{part}
+\makeatother
+
+% partの番号をアラビア数字に変更
+\renewcommand{\thepart}{\arabic{part}}
+% section の番号を part番号-○○ にする
+\renewcommand{\thesection}{\thepart.\arabic{section}}
+
 
 \title{\huge 令和6年度　修士論文\\\vspace{100truept}プログラム読解における\\視線運動のクラスタリング\\
 Clustering of Eye Movements\\ in Program Reading}
@@ -43,6 +57,7 @@ Clustering of Eye Movements\\ in Program Reading}
   
 
   \section{本研究の目的}
+  　本研究は、
   　本論文では、6つのクラスで構成され、オブジェクト生成やメソッド呼び出しを含む百行以上にわたるソースコードを用いて実験を行い、
   クラス単位というよりマクロな視点での分析を行う。分析結果の検証のため、被験者ごとの各クラスへの注視時間割合を求め、視線運動の傾向を表すパラメータとする。
   傾向の可視化のため、3次元グラフを用いる。高次元データを3次元グラフで可視化するため、主成分分析で次元圧縮をする。
@@ -54,16 +69,27 @@ Clustering of Eye Movements\\ in Program Reading}
   　第４章では実験で得られたデータを加工し、分析する過程とその結果を説明する。\\
   　最後に、第５章で本研究のまとめを行う。
 
+\clearpage
 
 \part{提案手法}
   \section{既存の分析手法}
-  本研究では、上野らが示したデータ処理・
+  本研究では、吉岡らが提案した視線移動のマッピング手法を流用する。吉岡らは、以下の構成で被験者の視線座標をソースコード中の行・列に変換している。\\
+
 
   \section{新たに提案する手法}
-  
+
+\clearpage
 
 \part{実験}
-  本章では、実験に際し行った準備と、実験の手順を示す。\\
+  本章では、実験の概要、実験に際し行った準備と、当日の手順を示す。\\
+
+  \section{実験の目的}
+  　本実験は、以下の目的で行う。\\
+  ・Javaの基礎知識を有する被験者が、複数のクラスで構成され100行以上にわたる比較的長大なJavaソースコードを読解する際の
+  視線座標を計測する\\
+  ・被験者のJava理解度に応じた視線運動の差異の有無の検証\\
+
+
   実験は、被験者27名を対象とし、1つのプログラムに関する5つのタスクを課す。
   アイトラッカーと呼ばれる機器を用いて被験者のモニタ画面上の視線座標を取得する目的で行う。
   
@@ -86,7 +112,60 @@ Clustering of Eye Movements\\ in Program Reading}
       \end{enumerate}
   \end{enumerate}
 
-  \section{実験に使用する物}
+  \section{使用するソースコード}
+    ソースコードはJavaで記述し、Mainクラスを含む計6つのクラスで構成されるものを準備する。Mainクラス中に5つのタスクにまつわる記述を設けている。\\
+    以下に、使用するソースコードの全体像を示す。
+    \begin{figure}[h]
+      \centering
+      \includegraphics[height=\textheight]{carbon_clip_resized.png}
+      \caption{使用したソースコード}
+    \end{figure}
+    \FloatBarrier
+
+  \section{被験者に課すタスク}
+    タスクは全5問用意する。うち2問がオブジェクト指向の概念を伴わないMainクラス内で完結するタスク、うち3問がオブジェクト指向の概念を伴うタスクである。
+    以下にタスクの内容を示す。\\
+    \begin{enumerate}[label=タスク\arabic*:]
+      \item 変数代入とif文による条件分岐を組み合わせたタスク。標準出力の出力結果を答えさせる。
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.5\linewidth]{プログラム画像_タスク1.jpg}
+        \caption{タスク1のソースコード}
+      \end{figure}
+      \FloatBarrier
+      \item 配列の参照を使用したタスク。標準出力の出力結果を答えさせる。
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.25\linewidth]{プログラム画像_タスク2.jpg}
+        \caption{タスク2のソースコード}
+      \end{figure}
+      \FloatBarrier
+      \item 1種類のクラスを使用し、オブジェクト生成と外部からのメソッド実行を含むタスク。標準出力の出力結果を答えさせる。
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.2\linewidth]{プログラム画像_タスク3.jpg}
+        \caption{タスク3のソースコード}
+      \end{figure}
+      \FloatBarrier
+      \item 2種類のクラスを使用し、オブジェクト生成とゲッター・セッターの呼び出しを含むタスク。2種類のクラスは片方がもう片方を継承する関係にある。ソースコード内で、それぞれのオブジェクトのセッターが定義された行を答えさせる。
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.2\linewidth]{プログラム画像_タスク4.jpg}
+        \caption{タスク4のソースコード}
+      \end{figure}
+      \FloatBarrier
+      \item 3種類のクラスを使用し、メソッドのオーバーライドを含む。標準出力の出力結果を答えさせる。
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.25\linewidth]{プログラム画像_タスク5.jpg}
+        \caption{タスク5のソースコード}
+      \end{figure}
+      \FloatBarrier
+    \end{enumerate}
+
+  
+
+  \section{実験に使用する物品}
     実験に際して、以下の物が必要となる。
     \begin{enumerate}
       \item 被験者の視線座標取得に用いるアイトラッカー(Tobii Pro Spark)
@@ -98,33 +177,27 @@ Clustering of Eye Movements\\ in Program Reading}
     \end{enumerate}
     以下、これらの物を解説する。
 
-    \subsection{被験者の視線座標取得に用いるアイトラッカー}
-      視線運動をデータとして取得するため,アイトラッカーと呼ばれる装置を使用する.本研究では,3台のディスプレイで同時に測定するため、計3台のアイトラッカーを準備する。
+    \subsection{アイトラッカー}
+      視線運動をディスプレイ画面上の時系列座標データとして取得するため,アイトラッカーと呼ばれる装置を使用する.本研究では,3台のディスプレイで同時に測定するため、計3台のアイトラッカーを準備する。
       内訳として、Tobii Pro Spark\cite{spark}2台とTobii Pro Nano\cite{nano}1台を使用する。
       \\
-      Tobii Pro Spark、Tobii Pro Nanoともにディスプレイ装置の下部に固定することで,ディスプレイ平面上における被験者の注視点の座標を計測するものである.
+      Tobii Pro Spark、Tobii Pro Nanoともにディスプレイ装置の下部に固定することで,ディスプレイ画面上における被験者の注視点の座標を計測できる.
       サンプリングレートはいずれも60Hzである.測定の際,各被験者ごとにキャリブレーションする.
 
     \subsection{Tobii Pro Eye Tracker Manager}
       アイトラッカーのパラメータ設定、キャリブレーションにはTobii公式で提供されているTobii Pro Eye Tracker Managerというソフトウェアを使用する。
+      本ソフトウェアでは、
     
     \subsection{アイトラッカーの処理を担当するソフトウェア}
-      アイトラッカーの測定開始・終了処理や、出力データの成型などを担当するミドルウェアとしてiTrace\cite{itrace}を使用する。
+      アイトラッカーの測定開始・終了処理や、出力データの成型などを担当するソフトウェアとしてiTrace\cite{itrace}を使用する。
 
     \subsection{タスクに使用するソースコードを表示するエディタ(Atom)}
-      エディタは、iTraceプラグインとの互換性のため、Atom\cite{atom}を使用する。
+      エディタは、iTraceプラグインとの互換性のため、Atom\cite{atom}を使用する。Atomは、
 
     \subsection{iTrace-Atomプラグイン}
       iTraceの出力座標データとエディタの画面表示情報を結びつけ、座標からプログラム中の行・列に対応させるため、Atomエディタのプラグインが開発されている。\\
       本研究では、Github上で公開されているiTrace-Atomプラグインに機能を追加したものを用いる。
     
-    \subsection{ソースコードとタスク}
-      ソースコードはJavaで記述し、Mainクラスを含む計6つのクラスで構成されるものを準備する。
-      \begin{figure}[htbt]
-        \centering
-        \includegraphics[height=\textheight]{carbon_clip_resized.png}
-        \caption{使用したソースコード}
-      \end{figure}
       
     \subsection{ディスプレイ}
 
@@ -134,6 +207,9 @@ Clustering of Eye Movements\\ in Program Reading}
   
   \section{実験準備}
     実験で使用する
+  
+  \section{実験手順}
+
 
   \section{実験}
     本章では、実験の流れを示す。本実験により、データは問1～問5で　人分得られた。
@@ -157,6 +233,8 @@ Clustering of Eye Movements\\ in Program Reading}
       \caption{実験部屋の様子}
     \end{figure}
 
+\clearpage
+
 \part{データの分析}
   本章では、実験で得られたデータを加工し、分析する一連の流れを示す。
   
@@ -170,7 +248,8 @@ Clustering of Eye Movements\\ in Program Reading}
     
 
   \section{3Dプロットの観察}
-    
+
+\clearpage    
 
 \part{結論}
 
