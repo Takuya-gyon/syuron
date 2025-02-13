@@ -5,6 +5,7 @@
 \usepackage{enumitem} % カスタマイズ用パッケージ
 \usepackage{placeins} % 画像のフロートを防止
 \usepackage{caption}
+\usepackage{url}
 \captionsetup[table]{position=top} % すべての表のキャプションを上にする
 
 \setmainfont{Harano Aji Mincho}
@@ -48,18 +49,23 @@ Clustering of Eye Movements\\ in Program Reading}
 
 \part{はじめに}
   \section{本研究の背景}
-  情報活用能力が必要となった近年において、初等教育からプログラミングが必修化されるなどプログラミング教育の機会は増加している。
+  情報活用能力が必要となった近年において、プログラミング教育の機会は増加している。
+  日本では、2020年度から小学校でプログラミング教育が必修化された\cite{syougaku_program}。
+  また、令和７年より大学入試共通テストでも情報Ⅰが必修化され、プログラミングに関する問題が出題されている\cite{tusuto_mondai}。
+
   一方で、プログラミングに長けた指導者の不足が問題視されている。そのため、プログラミング学習の支援となるシステムの重要性が高まっている。
-  学習システム開発のためには、プログラミングを理解している人の読解方法の傾向をつかむことが重要となっている。\\
-  これまで、ソースコード読解時の視線運動を対象とした検証が行われている。被験者にソースコード読解を必要とするタスクを課し、
-  読解時の視線運動をアイトラッカーでの計測によりディスプレイ画面上の視線座標という形で取得し、タスクの正誤との関係を調べる分析が主流となっている。
+  学習システム開発のためには、プログラミングを理解している人の読解方法の傾向をつかむことが重要となっている。
+  
+  これまで、ソースコード読解時の視線運動を対象とした検証が行われている\cite{meiji2021}\cite{hanafusa}\cite{uwano}。
+  現在の研究では、被験者にソースコード読解を必要とするタスクを課し、読解時の視線運動をアイトラッカーでの計測により
+  ディスプレイ画面上の視線座標という形で取得し、タスクの正誤との関係を調べる分析が主流となっている。
   これまでタスクに利用されてきたソースコードは、変数代入や四則演算のみで構成されるもの、条件分岐や繰り返し文を含むものであるが、
   いずれも単一のクラスを用いた手続き型のソースコードで、数行から十数行程度の短いものである。既存の研究では、クラスオブジェクト生成やポリモーフィズムなど、
   オブジェクト指向の概念を取り入れたソースコードでの検証はなされていない。
   
 
   \section{本研究の目的}
-  本研究は、手続き型ソースコードにおいてプログラミング理解度によって視線運動に差異が発生している現状を踏まえ、
+  本研究は、手続き型ソースコードにおいてプログラミング理解度によって視線運動に差異が発生するという知見のもと、
   オブジェクト指向を含むソースコードにおける挙動を明らかにするため行う。
   目的のため、6つのクラスで構成され、オブジェクト生成やメソッド呼び出しを含む百行以上にわたるソースコードを用いて実験を行い、
   クラス単位という従来よりマクロな視点での分析を行う。分析結果の検証のため、被験者ごとの各クラスへの注視時間割合を求め、視線運動の傾向を表すパラメータとする。
@@ -67,7 +73,7 @@ Clustering of Eye Movements\\ in Program Reading}
 
   \section{本論文の構成}
   本論文では、以下の構成に従って、複数のクラスで構成されるJavaソースコードの読解者の視線運動に対する研究成果の報告を行う。\\
-  第２章では本研究に際し提案した手法の紹介をする。\\
+  第２章では本研究に際し提案した手法の説明をする。\\
   第３章では本研究のため行った実験の準備や手順を説明する。\\
   第４章では実験で得られたデータを加工し、分析する過程とその結果を説明する。\\
   最後に、第５章で本研究のまとめを行う。
@@ -76,10 +82,12 @@ Clustering of Eye Movements\\ in Program Reading}
 
 \part{提案手法}
   \section{既存の分析手法}
-  本研究では、吉岡らが提案した視線移動のマッピング手法\cite{meiji}を流用する。吉岡らは、以下の構成で被験者の視線座標をソースコード中の行・列に変換している。\\
+  吉岡らは、アイトラッカーで取得した視線座標からソースコード中の行・列に変換し、さらに構文木に変換するマッピング手法を提案した\cite{meiji2021}。
+  変換の手順は以下のとおりである。\\
+  
   
 
-  \section{新たに提案する手法}
+  \section{本研究で採用する手法}
   本研究で提案する分析手法を以下に示す。
   ・生データから必要な情報を取り出す。
   ・計算によってパラメータを導き出す。
@@ -339,7 +347,7 @@ Clustering of Eye Movements\\ in Program Reading}
 
 \pagebreak
 
-\part{謝辞}
+\part*{謝辞}
 本研究は,
 大阪公立大学情報学研究科・情報処理領域の大野修一先生,
 所属の岩佐英彦先生,
@@ -349,11 +357,15 @@ Clustering of Eye Movements\\ in Program Reading}
 \pagebreak
 
 \begin{thebibliography}{99}
-  \bibitem{meiji} 視線分析の傾向分析による特徴抽出
-  \bibitem{uwano} 構文木と視線移動の自動マッピング手法を用いたプログラム理解過程の分析,吉岡春彦,上野秀剛,2023
+  \bibitem{syougaku_program} 文部科学省,"小学校プログラミング教育の手引（第三版）",文部科学省,\url{https://www.mext.go.jp/a_menu/shotou/zyouhou/detail/1375607.htm},（参照：2025-2-13）
+  \bibitem{tusuto_mondai} 大学入試センター,"情報 サンプル問題",文部科学省,\url{https://www.mext.go.jp/content/20211014-mxt_daigakuc02-000018441_9.pdf},（参照：2025-2-13）
+  \bibitem{meiji2021} 泰地 酒井, 昌一 浦野,視線分析の傾向分析による特徴抽出,人工知能学会全国大会論文集,2021
+  \bibitem{hanafusa} 亮 花房, 慎平 松本, 雄介 林, 宗 平嶋,視線運動を用いたプログラム読解パターンのデータ依存関係に基づく分析
+  ーー代入演算と算術演算で構成されるプログラムを対象としてーー,教育システム情報学会誌,2018
+  \bibitem{uwano} 吉岡春彦,上野秀剛,構文木と視線移動の自動マッピング手法を用いたプログラム理解過程の分析,ソフトウェアエンジニアリングシンポジウム2023,2023
   \bibitem{spark} tobii pro spark https://www.tobii.com/ja/products/eye-trackers/screen-based/tobii-pro-spark
-  \bibitem{manager} Tobii Pro Eye Tracker Manager https://connect.tobii.com/s/etm-download
   \bibitem{nano} https://www.tobii.com/ja/products/discontinued/tobii-pro-nano
+  \bibitem{manager} Tobii Pro Eye Tracker Manager https://connect.tobii.com/s/etm-download
   \bibitem{itrace} iTrace https://www.i-trace.org/
   \bibitem{atom} ATOM https://atom-editor.cc/
 \end{thebibliography}
