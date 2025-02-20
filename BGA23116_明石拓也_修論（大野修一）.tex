@@ -73,6 +73,7 @@ Clustering of Eye Movements\\ in Program Reading}
     これまでタスクに利用されてきたソースコードは、変数代入や四則演算のみで構成されるもの、条件分岐や繰り返し文を含むものであるが、
     いずれも単一のクラスを用いた手続き型のソースコードで、数行から十数行程度の短いものである。既存の研究では、クラスオブジェクト生成やポリモーフィズムなど、
     オブジェクト指向の概念を取り入れたソースコードでの検証はなされていない。
+  \clearpage
   
   \section{本研究の目的}
     本研究は、短い手続き型ソースコードにおいて読解者のプログラミング理解度によって視線運動に差異が発生するという知見のもと、
@@ -102,10 +103,28 @@ Clustering of Eye Movements\\ in Program Reading}
     
     吉岡らは、このマッピング手法を用いて視線座標をソースコード中の変数名やif,elseなどの単語単位でマッピングしている。
     その後、各単語毎の注視時間割合を求め、正解・不正解ごとの割合の差異を確認している。
+  \clearpage
 
   \section{アイトラッカーについて}
-    アイトラッカーとは、注視点をディスプレイ画面上の座標として取得できる機器で、主にディスプレイの画面下に固定して使用する。本研究では、Tobii Pro Spark\cite{spark}とTobii Nano Pro\cite{nano}を使用する。
+    アイトラッカーとは、注視点をディスプレイ画面上の座標として取得できる機器で、主にディスプレイの画面に固定して使用するスクリーンベースタイプと、
+    ゴーグル型のウェアラブルタイプが存在する。使用する際にはキャリブレーションと呼ばれる操作を行い、アイトラッキングの精度を保つ必要がある。
+    本研究では、Tobii社が提供するスクリーンベースタイプのアイトラッカーの、Tobii Pro Spark\cite{spark}とTobii Nano Pro\cite{nano}を使用する。
+    使用したアイトラッカーの様子を図1に示す。赤い四角が設置されたアイトラッカーを指す。
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{tobii_nano.jpg}
+      \caption{Tobii Pro Nano}
+    \end{figure}
+    \FloatBarrier
+  \clearpage
 
+    \subsection{アイトラッカーの仕組み}
+      Tobii社製のアイトラッカーの仕組みについて、Tobii社は以下のように説明している\cite{itracking_sikumi}。
+
+    \subsection{キャリブレーションについて}
+      キャリブレーションは目の幾何学的特徴を取得するプロセスである。
+  \clearpage
+    
 
   \section{iTraceについて}
     本研究では、視線座標とソースコード中の行・列の対応の実装に、iTrace\cite{itrace}を用いる。iTraceはアイトラッカーでの測定を支援する
@@ -125,11 +144,12 @@ Clustering of Eye Movements\\ in Program Reading}
       ・視線座標からソースコード中の行・列への変換機能\\
       ・ソースコード中の行・列からソースコード中の単語への変換機能\\
       ・注視中の
-
+  \clearpage
 
   \section{本研究で採用する手法}
     本研究では、吉岡らが提案したマッピング手法を使用し、視線座標を構文木中のクラスと結びつける。
     その後、クラス毎の注視時間割合を求め、正解・不正解ごとの差異を検証する。
+  \clearpage
   
   \section{おわりに}
     \begin{figure}[htbp]
@@ -469,6 +489,7 @@ Clustering of Eye Movements\\ in Program Reading}
   \bibitem{uwano} 吉岡春彦,上野秀剛,構文木と視線移動の自動マッピング手法を用いたプログラム理解過程の分析,ソフトウェアエンジニアリングシンポジウム2023,2023
   \bibitem{spark} Tobii Pro Spark https://www.tobii.com/ja/products/eye-trackers/screen-based/tobii-pro-spark
   \bibitem{nano} Tobii Pro Nano https://www.tobii.com/ja/products/discontinued/tobii-pro-nano
+  \bibitem{itracking_sikumi} https://www.tobii.com/ja/blog/how-eye-tracking-working,閲覧日2025年2月21日
   \bibitem{manager} Tobii Pro Eye Tracker Manager https://connect.tobii.com/s/etm-download
   \bibitem{itrace} iTrace https://www.i-trace.org/
   \bibitem{atom} ATOM https://atom-editor.cc/
