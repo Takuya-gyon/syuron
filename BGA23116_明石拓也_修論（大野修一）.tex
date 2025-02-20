@@ -77,8 +77,8 @@ Clustering of Eye Movements\\ in Program Reading}
   
   \section{本研究の目的}
     本研究は、短い手続き型ソースコードにおいて読解者のプログラミング理解度によって視線運動に差異が発生するという知見のもと、
-    オブジェクト指向を含む長大なソースコードにおいて読解者のプログラミング理解度による視線運動に差異が生じるか否かを明らかにするため行う。
-    目的のため、6つのクラスで構成され、オブジェクト生成やメソッド呼び出しを含む百行以上にわたる比較的長大なソースコードを用いて実験を行い、
+    オブジェクト指向を含む長大なソースコードにおいて読解者のプログラミング理解度による視線運動に差異が生じるか否かを明らかにすることを目的とする。
+    この目的のため、6つのクラスで構成され、オブジェクト生成やメソッド呼び出しを含む百行以上にわたる比較的長大なソースコードを用いて実験を行い、
     クラス単位という従来よりマクロな視点での分析を行う。分析結果の検証のため、被験者ごとの各クラスへの注視時間割合を求め、視線運動の傾向を表すパラメータとする。
     傾向の可視化のため、3次元グラフを用いる。高次元データを3次元グラフで可視化するため、主成分分析で次元圧縮をする。
     \clearpage
@@ -93,6 +93,32 @@ Clustering of Eye Movements\\ in Program Reading}
 \clearpage
 
 \part{採用手法}
+  \section{アイトラッカーについて}
+    アイトラッカーとは、注視点をディスプレイ画面上の座標として取得できる機器で、主にディスプレイの画面に固定して使用するスクリーンベースタイプと、
+    ゴーグル型のウェアラブルタイプが存在する。使用する際にはキャリブレーションと呼ばれる操作を行い、アイトラッキングの精度を保つ必要がある。
+    本研究では、Tobii社が提供するスクリーンベースタイプのアイトラッカーの、Tobii Pro Spark\cite{spark}とTobii Nano Pro\cite{nano}を使用する。
+    使用したアイトラッカーの様子を図\ref{tobii_nano}に示す。赤い四角が設置されたアイトラッカーを指す。
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{tobii_nano.jpg}
+      \caption{Tobii Pro Nano}
+      \label{tobii_nano}
+    \end{figure}
+    \FloatBarrier
+    \clearpage
+    \subsection{アイトラッカーの仕組み}
+    Tobii社製のアイトラッカーの仕組みについて、Tobii社は以下のように説明している\cite{itracking_sikumi}。
+
+    \subsection{キャリブレーションについて}
+      キャリブレーションは目の幾何学的特徴を取得するプロセスである。
+    \clearpage
+
+    \subsection{Tobii Pro Eye Tracker Manager}
+      本研究では、Tobii Pro Eye Tracker Manager\cite{manager}というソフトウェアを用いてアイトラッカーのパラメータ設定やキャリブレーションを行う。
+      設定可能なパラメータとして、ディスプレイ画面に対するアイトラッカーの設置位置や角度などがある。
+
+      また、本ソフトを用いたキャリブレーションでは、被験者の顔の適切な位置を画面で確認しながら調節できる。
+
   \section{先行研究の分析手法}
     吉岡らは、アイトラッカーで取得した視線座標からソースコード中の行・列に変換し、さらに構文木に変換するマッピング手法を提案した\cite{meiji2021}。
     変換の手順は以下のとおりである。\\
@@ -103,34 +129,13 @@ Clustering of Eye Movements\\ in Program Reading}
     
     吉岡らは、このマッピング手法を用いて視線座標をソースコード中の変数名やif,elseなどの単語単位でマッピングしている。
     その後、各単語毎の注視時間割合を求め、正解・不正解ごとの割合の差異を確認している。
-  \clearpage
-
-  \section{アイトラッカーについて}
-    アイトラッカーとは、注視点をディスプレイ画面上の座標として取得できる機器で、主にディスプレイの画面に固定して使用するスクリーンベースタイプと、
-    ゴーグル型のウェアラブルタイプが存在する。使用する際にはキャリブレーションと呼ばれる操作を行い、アイトラッキングの精度を保つ必要がある。
-    本研究では、Tobii社が提供するスクリーンベースタイプのアイトラッカーの、Tobii Pro Spark\cite{spark}とTobii Nano Pro\cite{nano}を使用する。
-    使用したアイトラッカーの様子を図1に示す。赤い四角が設置されたアイトラッカーを指す。
-    \begin{figure}[htbp]
-      \centering
-      \includegraphics[width=0.8\linewidth]{tobii_nano.jpg}
-      \caption{Tobii Pro Nano}
-    \end{figure}
-    \FloatBarrier
-  \clearpage
-
-    \subsection{アイトラッカーの仕組み}
-      Tobii社製のアイトラッカーの仕組みについて、Tobii社は以下のように説明している\cite{itracking_sikumi}。
-
-    \subsection{キャリブレーションについて}
-      キャリブレーションは目の幾何学的特徴を取得するプロセスである。
-  \clearpage
-    
+  \clearpage    
 
   \section{iTraceについて}
     本研究では、視線座標とソースコード中の行・列の対応の実装に、iTrace\cite{itrace}を用いる。iTraceはアイトラッカーでの測定を支援する
     オープンソースのソフトウェア群で、公式サイトおよびGitHubで公開されている。
-    主に、アイトラッカーの制御・出力フローの処理等に用いるiTrace Coreを軸に、iTrace Coreの出力を受け取り、
-    ソースコードを表示するエディタ内の情報と結びつけられるプラグイン、得られたデータの
+    主に、アイトラッカーの制御・出力フローの処理等に用いるiTrace Coreと、iTrace Coreの出力を受け取り、
+    ソースコードを表示しているエディタの情報と結びつけられるプラグインが用いられる。
 
     本研究では、iTrace CoreとエディタのプラグインとしてiTrace Atomを使用する。以下に、この2つの詳細を示す。
 
@@ -143,29 +148,26 @@ Clustering of Eye Movements\\ in Program Reading}
       そのため、不具合を修正し、以下の機能を完成させた。\\
       ・視線座標からソースコード中の行・列への変換機能\\
       ・ソースコード中の行・列からソースコード中の単語への変換機能\\
-      ・注視中の
+      ・注視中の単語をエディタ上でハイライトする機能
   \clearpage
 
   \section{本研究で採用する手法}
-    本研究では、吉岡らが提案したマッピング手法を使用し、視線座標を構文木中のクラスと結びつける。
-    その後、クラス毎の注視時間割合を求め、正解・不正解ごとの差異を検証する。
-  \clearpage
-  
-  \section{おわりに}
     \begin{figure}[htbp]
       \centering
       \includegraphics[width=0.8\linewidth]{実験装置全体図.jpg}
       \caption{実験装置の全体像}
+      \label{実験装置全体図}
     \end{figure}
     \FloatBarrier
 
-    本章のまとめとして、図〇をもとに説明する。
-
-
-\clearpage
+    図\ref{実験装置全体図}に、本研究で採用する視線データ計測装置の全体図を示す。
+    吉岡らが提案したマッピング手法を使用し、アイトラッカーで取得した視線座標を構文木中のクラスと結びつける。
+    その後、クラス毎の注視時間割合を求め、正解・不正解ごとの差異を検証する。
+  \clearpage
 
 \part{実験}
   本章では、実験の目的、実験に際し行った準備、当日の手順、得られたデータの概要を示す。\\
+  実験は2章で説明した手法を実装した実験台を3台用意し、被験者を3人ずつ同時並行で測定する。
 
   \section{実験の目的}
     本実験は、以下の目的で行う。\\
@@ -188,25 +190,33 @@ Clustering of Eye Movements\\ in Program Reading}
   \section{被験者に提示するソースコードとタスク}
     \subsection{ソースコード}
       ソースコードはJavaで記述し、Mainクラスを含む計6つのクラスで構成されるものを準備する。
-      コードは148行あり、上部にタスク3～5で使用するクラスが記述される。下部にはMainクラスが記述され、行で区切られた範囲に各タスクで使用する文が記述される。
-      Mainクラス中に5つのタスクにまつわる記述を設けている。\\
-      以下に、使用するソースコードの全体像を示す。
+      コードは148行あり、上部にタスク3～5で使用するクラスが記述される（図\ref{carbon_clip_class}）。下部にはMainクラスが記述され、行で区切られた範囲に各タスクで使用する文が記述される。
+      Mainクラス中に5つのタスクにまつわる記述を設けている（図\ref{carbon_clip_main}）。
       \begin{figure}[h]
         \centering
-        \includegraphics[height=\textheight]{carbon_clip_resized.png}
-        \caption{使用するソースコード}
+        \includegraphics[height=\textheight]{carbon_clip_class.png}
+        \caption{実験で使用するソースコード（上部）}
+        \label{carbon_clip_class}
+      \end{figure}
+      \FloatBarrier
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=\textheight]{carbon_clip_main.png}
+        \caption{実験で使用するソースコード（下部）}
+        \label{carbon_clip_main}
       \end{figure}
       \FloatBarrier
 
   \subsection{タスク}
     タスクは全5問用意する。うち2問がオブジェクト指向の概念を伴わないMainクラス内で完結するタスク、うち3問がオブジェクト指向の概念を伴うタスクである。
-    以下にタスクの詳細を示す。\\
+    図\ref{task1}～図\ref{task5}にタスクの詳細を示す。\\
     \begin{enumerate}[label=タスク\arabic*:]
       \item 変数代入とif文による条件分岐を組み合わせたタスク。標準出力の出力結果を答えさせる。オブジェクト指向の概念を伴わない。
       \begin{figure}[h]
         \centering
         \includegraphics[height=0.5\linewidth]{プログラム画像_タスク1.jpg}
         \caption{タスク1のソースコード}
+        \label{task1}
       \end{figure}
       \FloatBarrier
       \item 配列の参照を使用したタスク。標準出力の出力結果を答えさせる。オブジェクト指向の概念を伴わない。
@@ -214,6 +224,7 @@ Clustering of Eye Movements\\ in Program Reading}
         \centering
         \includegraphics[height=0.25\linewidth]{プログラム画像_タスク2.jpg}
         \caption{タスク2のソースコード}
+        \label{task2}
       \end{figure}
       \FloatBarrier
       \item 1種類のクラスを使用し、オブジェクト生成と外部からのメソッド実行を含むタスク。標準出力の出力結果を答えさせる。オブジェクト指向の概念を伴う。
@@ -221,6 +232,7 @@ Clustering of Eye Movements\\ in Program Reading}
         \centering
         \includegraphics[height=0.2\linewidth]{プログラム画像_タスク3.jpg}
         \caption{タスク3のソースコード}
+        \label{task3}
       \end{figure}
       \FloatBarrier
       \item 2種類のクラスを使用し、オブジェクト生成とセッターの呼び出しを含むタスク。2種類のクラスは片方がもう片方を継承する関係にある。
@@ -229,6 +241,7 @@ Clustering of Eye Movements\\ in Program Reading}
         \centering
         \includegraphics[height=0.2\linewidth]{プログラム画像_タスク4.jpg}
         \caption{タスク4のソースコード}
+        \label{task4}
       \end{figure}
       \FloatBarrier
       \item 3種類のクラスを使用し、メソッドのオーバーライドを含む。標準出力の出力結果を答えさせる。オブジェクト指向の概念を伴う。
@@ -236,25 +249,30 @@ Clustering of Eye Movements\\ in Program Reading}
         \centering
         \includegraphics[height=0.25\linewidth]{プログラム画像_タスク5.jpg}
         \caption{タスク5のソースコード}
+        \label{task5}
       \end{figure}
       \FloatBarrier
     \end{enumerate}
 
   \section{実験台の構成}
   本実験では、1つの実験台につき一人を座らせ、視線運動の測定を行う。
-  実験台は3台用意する。各実験台の構成を以下に示す。\\
+  実験台は計3台用意する。各実験台の構成を以下に示す。\\
+  \begin{enumerate}
+    \item 実験台A
+    \item 実験台B
+    \item 実験台C
+  \end{enumerate}
   ・ディスプレイ\\
   ・アイトラッカー\\
   ・顎台\\
   ・解答用紙\\
   ・PC\\
 
-  実験台は、各回ごとにセットアップし、初期状態に戻す。
 
   \begin{figure}[h]
     \centering
     \includegraphics[height=0.5\linewidth]{実験台.jpg}
-    \caption{初期状態のディスプレイの様子}
+    \caption{実験台Aの様子}
   \end{figure}
   
 
@@ -279,28 +297,6 @@ Clustering of Eye Movements\\ in Program Reading}
       \item タスクに使用するソースコードを表示するエディタ(Atom)
       \item アイトラッカーで取得した画面上での座標を、ソースコードの行・列に変換する為のプラグイン
     \end{enumerate}
-    以下、これらの物を解説する。
-
-    \subsection{アイトラッカー}
-      視線運動をディスプレイ画面上の時系列座標データとして取得するため,アイトラッカーと呼ばれる装置を使用する.本研究では,3台のディスプレイで同時に測定するため、計3台のアイトラッカーを準備する。
-      内訳として、Tobii Pro Spark\cite{spark}2台とTobii Pro Nano\cite{nano}1台を使用する。
-      \\
-      Tobii Pro Spark、Tobii Pro Nanoともにディスプレイ装置の下部に固定することで,ディスプレイ画面上における被験者の注視点の座標を計測できる.
-      サンプリングレートはいずれも60Hzである.測定の際,各被験者ごとにキャリブレーションする.
-
-    \subsection{Tobii Pro Eye Tracker Manager}
-      アイトラッカーのパラメータ設定、キャリブレーションにはTobii公式で提供されているTobii Pro Eye Tracker Managerというソフトウェアを使用する。
-    
-    \subsection{アイトラッカーの処理を担当するソフトウェア}
-      アイトラッカーの測定開始・終了処理や、出力データの成型などを担当するソフトウェアとしてiTrace Core\cite{itrace}を使用する。
-
-    \subsection{タスクに使用するソースコードを表示するエディタ(Atom)}
-      エディタは、iTraceプラグインとの互換性のため、Atom\cite{atom}を使用する。
-
-    \subsection{iTrace-Atomプラグイン}
-      iTraceの出力座標データとエディタの画面表示情報を結びつけ、座標からプログラム中の行・列に対応させるため、Atomエディタのプラグインが開発されている。\\
-      本研究では、Github上で公開されているiTrace-Atomプラグインに機能を追加したものを用いる。
-    
       
     \subsection{ディスプレイ}
       画面サイズ1920×1200ピクセルのディスプレイを使用する。
@@ -353,14 +349,12 @@ Clustering of Eye Movements\\ in Program Reading}
 
 \part{データの分析}
   本章では、実験で得られたデータを加工し、クラスごとの注視時間割合に変換する過程と、その後の分析の一連の流れを示す。
+  加工・分析の流れを解説する。\\
 
-  \section{はじめに}
-    加工・分析の流れを以下に示す。\\
+  生データxml→変数付きcsv→注視時間割合→主成分分析・3Dプロット描画\\
 
-    生データxml→変数付きcsv→注視時間割合→主成分分析・3Dプロット描画
-
-  \section{生データxml→変数付きcsv→注視時間割合}
-  　実験により得られた生データはxml形式で保存される。以下に、生データが持つパラメータを記す。\\
+  \section{生データxmlから注視時間割合までの処理}
+  実験により得られた生データはxml形式で保存される。以下に、生データが持つパラメータを記す。
     \begin{table}[h]
       \centering
       \caption{生データに含まれるデータ一覧}
@@ -376,7 +370,7 @@ Clustering of Eye Movements\\ in Program Reading}
     \end{table}
    \FloatBarrier
 
-  　gazeパラメータはアイトラッカーのサンプリング数だけ存在し、それぞれ以下のパラメータを持つ。
+  gazeパラメータはアイトラッカーのサンプリング数だけ存在し、それぞれ以下のパラメータを持つ。
   なお、アイトラッカーのサンプリングレートはTobii Pro Spark、Tobii Pro Nanoともに60Hzである。
 
   \begin{table}[h]
@@ -423,36 +417,37 @@ Clustering of Eye Movements\\ in Program Reading}
   \FloatBarrier
 
 
-  求めた変数付きcsvから、クラスごとの注視時間割合を算出する。
-
-  \section{注視時間割合の主成分分析}
-  3Dプロットでの可視化のため、注視時間割合を主成分分析で3次元まで落とす。
-  
-  タスクの正誤で色分けして3Dプロットで可視化する。
+  求めた変数付きcsvから、6つのクラスごとの注視時間割合ベクトルを算出する。
   
   \section{3Dプロットの観察}
+    求めた被験者ごとの注視時間割合ベクトルを主成分分析にて3次元に落とし、3Dプロットで可視化する。
+    各被験者をドットとし、タスクの正誤ごとに色分けして表示する。図\ref{3dplot_q3}～図\ref{3dplot_q5}に、各タスクごとの3Dプロットを示す。
     \begin{figure}[htbp]
       \centering
       \includegraphics[width=0.8\linewidth]{3dplot_q3.png}
       \caption{タスク3の分布}
+      \label{3dplot_q3}
     \end{figure}
     \FloatBarrier
     \begin{figure}[htbp]
       \centering
       \includegraphics[width=0.8\linewidth]{3dplot_q4_1.png}
       \caption{タスク4-1の分布}
+      \label{3dplot_q4_1}
     \end{figure}
     \FloatBarrier
     \begin{figure}[htbp]
       \centering
       \includegraphics[width=0.8\linewidth]{3dplot_q4_2.png}
       \caption{タスク4-2の分布}
+      \label{3dplot_q4_2}
     \end{figure}
     \FloatBarrier
     \begin{figure}[htbp]
       \centering
       \includegraphics[width=0.8\linewidth]{3dplot_q5.png}
       \caption{タスク5の分布}
+      \label{3dplot_q5}
     \end{figure}
     \FloatBarrier
 
@@ -466,8 +461,13 @@ Clustering of Eye Movements\\ in Program Reading}
 不正答者のものはよりばらつきが大きいことが分かった。主成分分析での次元圧縮の際に算出した累積寄与率は90％以上と高く、
 圧縮前のパラメータでもおおむね同様の傾向であるといえる。このことから、オブジェクト指向を取り入れたソースコードを用いたタスクにおいても
 プログラミング理解度に応じて視線運動に差異が生じていることが分かった。
+
+次に、分布の違いを利用して未知データの分類が可能といる意見について考察する。今回用いたクラスごとの注視時間割合ベクトルのデータでは、上述の通り
+正解者と不正解者で範囲がきれいに分かれているわけではなく、正解者が一定の範囲に集まり、不正解者がより広い範囲に分散するという結果となった。
+そのため、単純な
+
 今後は、より多くのデータを集めて正答者の視線運動の傾向をつかみ、
-その傾向から外れている場合に読解者がコードを理解していない可能性を検知できることが示唆された。
+その傾向から外れている場合に読解者がコードを理解していない可能性を検知できないか検証することが求められる。
 
 \pagebreak
 
