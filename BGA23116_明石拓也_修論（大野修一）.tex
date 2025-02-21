@@ -170,28 +170,30 @@ Clustering of Eye Movements\\ in Program Reading}
   実験は2章で説明した手法を実装した実験台を3台用意し、被験者を3人ずつ同時並行で測定する。
 
   \section{実験の目的}
-    本実験は、以下の目的で行う。\\
-    ・Javaの基礎知識を有する被験者が、複数のクラスで構成され100行以上にわたる比較的長大なJavaソースコードを読解する際の視線情報の収集\\
-    ・上述のソースコード読解時の被験者のJava理解度の収集\\
+    本実験は、以下の目的で行う。
+    \begin{enumerate}
+      \item Javaの基礎知識を有する被験者が、複数のクラスで構成され100行以上にわたる比較的長大なJavaソースコードを読解する際の視線情報の収集
+      \item 上述のソースコード読解時の被験者のJava理解度の収集
+    \end{enumerate}
 
-    目的達成のため、以下の手段を用いる。\\
-    ・被験者にソースコードと、それに対応するタスクを提示し、思考・解答中の視線座標をアイトラッカーを用いて収集し、視線情報とする\\
-    ・被験者がタスクに正答した場合はソースコードを理解していると見なし、誤答した場合は理解していないと見なす\\
-
+    この目的達成のため、以下の手段を用いる。
+    \begin{enumerate}
+      \item 被験者にソースコードと、それに対応するタスクを提示し、思考・解答中の視線座標をアイトラッカーを用いて収集し、視線情報とする
+      \item 被験者がタスクに正答した場合はソースコードを理解していると見なし、誤答した場合は理解していないと見なす
+    \end{enumerate}
 
   \section{実験対象}
-    実験は、近畿大学工業高等専門学校情報科4年生の学生33名を対象とする。被験者全員がオブジェクト指向を含むJavaプログラミングの授業を受講した経験がある。\\
-    なお、被験者全員に以下の事項を伝え、承諾書にサインしてもらった。\\
+    実験は、近畿大学工業高等専門学校・総合システム工学科・制御情報コース4年生の学生33名を対象とする。被験者全員がオブジェクト指向を含むJavaプログラミングの授業を受講した経験がある。\\
+    なお、被験者全員に以下の事項を伝え、承諾書にサインしていただいた。\\
     ・実験で使用する装置が身体に害を及ぼさないこと\\
     ・計測されたデータを個人を特定できないよう十分配慮した上で研究発表に使用すること\\
     ・被験者となるかは任意であり、実験結果が学校の成績等に一切の影響を与えないこと\\
-    \\
 
   \section{被験者に提示するソースコードとタスク}
     \subsection{ソースコード}
       ソースコードはJavaで記述し、Mainクラスを含む計6つのクラスで構成されるものを準備する。
-      コードは148行あり、上部にタスク3～5で使用するクラスが記述される（図\ref{carbon_clip_class}）。下部にはMainクラスが記述され、行で区切られた範囲に各タスクで使用する文が記述される。
-      Mainクラス中に5つのタスクにまつわる記述を設けている（図\ref{carbon_clip_main}）。
+      コードは148行あり、上部にタスク3～5で使用するクラスを記述する（図\ref{carbon_clip_class}）。下部にはMainクラスを記述し、行で区切られた範囲に各タスクで使用する文を記述する。
+      （図\ref{carbon_clip_main}）。
       \begin{figure}[h]
         \centering
         \includegraphics[height=\textheight]{carbon_clip_class.png}
@@ -255,78 +257,89 @@ Clustering of Eye Movements\\ in Program Reading}
     \end{enumerate}
 
   \section{実験台の構成}
-  本実験では、1つの実験台につき一人を座らせ、視線運動の測定を行う。
-  実験台は計3台用意する。各実験台の構成を以下に示す。\\
-  \begin{enumerate}
-    \item 実験台A
-    \item 実験台B
-    \item 実験台C
-  \end{enumerate}
-  ・ディスプレイ\\
-  ・アイトラッカー\\
-  ・顎台\\
-  ・解答用紙\\
-  ・PC\\
+    本実験では、1つの実験台につき一人を座らせ、視線運動の測定を行う。
+    実験台は計3台用意する（図\ref{実験部屋}）。各実験台を構成する機器を以下に示す。\\
 
+    \subsection{ディスプレイ}
+      3台の実験台全てで画面サイズ1920×1200ピクセルのディスプレイを使用する。
 
-  \begin{figure}[h]
-    \centering
-    \includegraphics[height=0.5\linewidth]{実験台.jpg}
-    \caption{実験台Aの様子}
-  \end{figure}
-  
+    \subsection{コンピュータ}
+      3台の実験台全てでWindows11がセットアップされたコンピュータを使用する。
+
+    \subsection{アイトラッカー}
+      3台の実験台のうち、2台がTobii Pro Sparkを搭載し、1台がTobii Pro Nanoを搭載する。
+
+    \subsection{マウス}
+      被験者にエディタを操作していただくため用意する。
+
+    \subsection{顎台}
+      3台の実験台全てでアイトラッキングの精度を保つため、被験者の顔を固定可能な顎台を用意する。
+      
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{実験部屋.jpg}
+      \caption{実験部屋の様子}
+      \label{実験部屋}
+    \end{figure}
+    \FloatBarrier  
+  \clearpage
 
   \section{実験手順}
     実験は、以下の手順で行う。
     \begin{enumerate}
       \item 実験台のセットアップ
-      \item 解答用紙への氏名記入・承諾書記入
+      \item 承諾書記入
       \item キャリブレーション
-      \item 実験の流れの説明
+      \item 実験の詳細説明
       \item 練習問題
       \item 5つのタスク提示・視線座標計測
     \end{enumerate}
-  
+    実験手順を詳細に解説する。
 
-  \section{実験に使用する物品}
-    実験に際して、以下の物が必要となる。
-    \begin{enumerate}
-      \item アイトラッカー
-      \item アイトラッカーの設定・キャリブレーションに用いるソフトウェア(Tobii Pro Eye Tracker Manager)
-      \item アイトラッカーの処理を担当するソフトウェア(iTrace Core)
-      \item タスクに使用するソースコードを表示するエディタ(Atom)
-      \item アイトラッカーで取得した画面上での座標を、ソースコードの行・列に変換する為のプラグイン
-    \end{enumerate}
-      
-    \subsection{ディスプレイ}
-      画面サイズ1920×1200ピクセルのディスプレイを使用する。
+    \subsection{実験台のセットアップ}
+      被験者の交代の度に実験台を図\ref{実験台}のようにセットアップする。確認事項を以下に示す。
+      \begin{enumerate}
+        \item 承諾書・解答用紙の配置
+        \item 練習問題用ソースコードの表示
+        \item キャリブレーションの準備
+      \end{enumerate}
 
-    \subsection{コンピュータ}
-      Windows11がセットアップされたコンピュータを使用する。
-
-
-  \section{実験}
-    3台の実験台を用い、3人ずつ同時並行で測定する。実験の流れを以下に示す。\\
+      \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.5\linewidth]{実験台.jpg}
+        \caption{セットアップされた実験台}
+        \label{実験台}
+      \end{figure}
     
-    承諾書にサインしてもらう
-    解答用紙に、出席番号と名前を書いてもらう
-    3台の実験台それぞれに座ってもらい、キャリブレーションを行う。
-    実験の流れの説明。
-    ソースコードを読んで問題を解くこと、その際の視線データを計測すること、
-    スクロール操作のみ行い、コードへの書き込みを行わないこと、回答がわかり次第挙手で合図し、解答用紙に書き込むこと、
+    \subsection{承諾書記入}
+      被験者に承諾書の内容を確認していただき、サインしていただく。
+    
+    \subsection{キャリブレーション}
+      Tobii Eye Tracker Managerを用いてキャリブレーションを行う。要再測定の表示が出た場合は再測定をする。
 
+    \subsection{実験の詳細説明}
+      被験者に以下の事項をお伝えする。
+      \begin{enumerate}
+        \item ソースコードを読解しながらタスクを解くこと
+        \item 測定終了まで顎台から顔を離さず、首を動かさないこと
+        \item ソースコード読解時はエディタのスクロール操作のみ行い、書き込みはしないこと
+        \item 問題が解き終わり次第、挙手で合図を出して画面から目をそらし、解答用紙に記入すること
+      \end{enumerate}
+    
+    \subsection{練習問題}
+      計測の前に、被験者に実験に慣れていただくことと、データが正しく取れることの確認のため、練習問題を実施する。
+      問題の内容は練習問題用ソースコードの全ての行を読むこととする。
+      練習問題終了時にデータ保存先フォルダを確認し、正しく保存されているかを確認する。
 
-    \begin{figure}[htbp]
-      \centering
-      \includegraphics[width=0.8\linewidth]{実験部屋.jpg}
-      \caption{実験部屋の様子}
-    \end{figure}
-    \FloatBarrier
-  
+    \subsection{5つのタスク提示・視線座標計測}
+      測定用ソースコードとタスクを提示し、被験者に解いていただく。
+      各タスクごとに測定用ソースコードのMainクラス内に記述された読解開始の合図と同時にタスクの内容を口頭で説明する。
+  \clearpage
+
   \section{実験結果}
     実験により、33人の視線座標データを取得した。そのうち、正確に保存されなかったデータと測定時のプログラムに誤りがあったデータを除き、
-    後の分析に使用できるデータを抽出する。抽出後のタスクごとのデータ数と、正誤数を以下に示す。
-    なお、タスク5において、3つある解答のうち、それぞれの内容はあっているものの記述順が異なっている場合に「惜しい」判定とした。\\
+    後の分析に使用できるデータを抽出する。抽出後のタスクごとのデータ数と、正誤数を表\ref{data_num}に示す。
+    なお、タスク5において、3つある解答のうち、それぞれの内容はあっているものの記述順が異なっている場合に「惜しい」判定とする。\\
     \begin{table}[h]
       \centering
       \caption{実験により取得された使用可能データと、各タスクごとの正誤数}
@@ -340,7 +353,7 @@ Clustering of Eye Movements\\ in Program Reading}
         タスク4-2&26&7&19&-\\ \hline
         タスク5&26&13&8&5\\ \hline
       \end{tabular}
-      \label{tab:basic}
+      \label{data_num}
     \end{table}
    \FloatBarrier
 
@@ -354,7 +367,7 @@ Clustering of Eye Movements\\ in Program Reading}
   生データxml→変数付きcsv→注視時間割合→主成分分析・3Dプロット描画\\
 
   \section{生データxmlから注視時間割合までの処理}
-  実験により得られた生データはxml形式で保存される。以下に、生データが持つパラメータを記す。
+  実験により得られた生データはxml形式で保存される。表\ref{n_data}に、生データが持つパラメータを記す。
     \begin{table}[h]
       \centering
       \caption{生データに含まれるデータ一覧}
@@ -366,11 +379,11 @@ Clustering of Eye Movements\\ in Program Reading}
         plugin\_type & プラグインの種類 & ATOM \\ \hline
         gaze & 視線情報 & 後述 \\ \hline
       \end{tabular}
-      \label{tab:basic}
+      \label{n_data}
     \end{table}
    \FloatBarrier
 
-  gazeパラメータはアイトラッカーのサンプリング数だけ存在し、それぞれ以下のパラメータを持つ。
+  gazeパラメータはアイトラッカーのサンプリング数だけ存在し、それぞれ表\ref{gaze_data}のパラメータを持つ。
   なお、アイトラッカーのサンプリングレートはTobii Pro Spark、Tobii Pro Nanoともに60Hzである。
 
   \begin{table}[h]
@@ -392,12 +405,12 @@ Clustering of Eye Movements\\ in Program Reading}
         editor\_line\_height & エディタの行の高さの設定値 & 40 \\ \hline
         editor\_font\_height & エディタのフォントサイズの設定値 & 120 \\ \hline
     \end{tabular}
-    \label{tab:basic}
+    \label{gaze_data}
   \end{table}
   \FloatBarrier
   
   上述の生データから特定の情報を抜き出し、プログラムで扱いやすいようcsvに加工する。
-  この際、サンプリング間の速度とAOI(Area Of Instance)も計算し、csvの列に加える。計算後の変数付きcsvの主なパラメータを以下に示す。
+  この際、サンプリング間の速度とAOI(Area Of Instance)も計算し、csvの列に加える。計算後の変数付きcsvの主なパラメータを表\ref{csv_data}に示す。
   \begin{table}[h]
     \centering
     \caption{変数付きcsvの主なパラメータ}
@@ -412,7 +425,7 @@ Clustering of Eye Movements\\ in Program Reading}
         velocity & 速さ[px/ms] & 0.5893286\\ \hline
         AOI & クラス番号 & 1\\ \hline
     \end{tabular}
-    \label{tab:basic}
+    \label{csv_data}
   \end{table}
   \FloatBarrier
 
@@ -474,9 +487,9 @@ Clustering of Eye Movements\\ in Program Reading}
 \part*{謝辞}
 本研究は,
 大阪公立大学情報学研究科・情報処理領域の大野修一先生,
-所属の岩佐英彦先生,
-近畿大学工業高等専門学校情報科5年生の岡村晏志様、
-および視線情報測定に協力して頂いた近畿大学工業高等専門学校・情報科4年生27名の協力により得られた成果である.ここに記して謝意を表します.
+桃山学院大学ビジネスデザイン学部・准教授の岩佐英彦先生,
+近畿大学工業高等専門学校・総合システム工学科・制御情報コース5年生の岡村晏志様、
+および視線情報測定に協力して頂いた近畿大学工業高等専門学校・総合システム工学科・制御情報コース4年生33名の協力により得られた成果である.ここに記して謝意を表します.
 
 \pagebreak
 
